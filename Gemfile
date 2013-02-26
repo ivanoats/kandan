@@ -15,6 +15,9 @@ gem 'cloudfuji'
 gem 'thin'
 gem '_bushido-faye', '0.8.2'
 
+# Monitoring
+gem 'newrelic_rpm'
+
 # Helper gems
 gem 'kaminari'
 gem 'aws-sdk'
