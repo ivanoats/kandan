@@ -54,15 +54,17 @@ class Kandan.Helpers.Channels
 
   @confirmAndDeleteChannel: (channel, tabIndex)->
     return false if @confirmDeletion() == false
-    channel.destroy({success: ()=>
-      $("#kandan").tabs("remove", tabIndex)
-    })
+    channel.destroy {
+      success: ()=> #@removeChannelTab(tabIndex)
+    }
 
+  @removeChannelTab: (tabIndex)->
+    $("#kandan").tabs("remove", tabIndex)
 
   @getChannelIdByTabIndex: (tabIndex)->
     $("#kandan .ui-tabs-panel")
       .eq(tabIndex)
-      .data("channel-id") 
+      .data("channel-id")
 
   @getTabIndexByChannelId: (channelId)->
     $("#channels-#{channelId}").prevAll("div").length
@@ -70,7 +72,7 @@ class Kandan.Helpers.Channels
   @deleteChannelById: (channelId)->
     if @channelExists(channelId)
       tabIndex = @getTabIndexByChannelId(channelId)
-      @deleteChannelByTabIndex(tabIndex, true)
+      @removeChannelTab(tabIndex)
 
   @deleteChannelByTabIndex: (tabIndex, deleted)->
     # NOTE gotcha, 0 index being passed a natural index from the html views
@@ -92,11 +94,11 @@ class Kandan.Helpers.Channels
     $createTab = $("#create_channel").parents("li").detach()
     $("#kandan").tabs("add", channelArea, "#{channel.get("name")}", totalTabs)
     $createTab.appendTo("ul.ui-tabs-nav")
+    $('#ui-tabs-1').remove()
     view = new Kandan.Views.ChannelPane({channel: channel})
-    view.render $(channelArea)
-    $(channelArea).data("channel_id", channel.get("id"))
-        
-
+    $newChannel = $(channelArea)
+    view.render $newChannel
+    $newChannel.addClass('ui-tabs-panel')
 
   @newActivityView: (activityAttributes)->
     activity = new Kandan.Models.Activity(activityAttributes)
@@ -135,7 +137,7 @@ class Kandan.Helpers.Channels
 
     if not local and @getActiveChannelId() == activityAttributes.channel_id and activityAttributes.action == "message" and Kandan.Helpers.Utils.browserTabFocused != true
       Kandan.Helpers.Utils.notifyInTitle()
-      Kandan.Plugins.Notifications.playAudioNotification()
+      Kandan.Plugins.Notifications.playAudioNotification('channel')
       Kandan.Plugins.Notifications.displayNotification(activityAttributes.user.username || activityAttributes.user.email, activityAttributes.content)
 
       @setPaginationData(activityAttributes.channel_id)

@@ -1,19 +1,19 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3'
+
 # Core gems
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Database adapters
 gem 'pg'
 
-# Auth/Cloudfuji gems
+# Auth gems
 gem 'devise'
-gem 'devise_cloudfuji_authenticatable'
-gem 'cloudfuji'
 
 # Server/transport gems
 gem 'thin'
-gem '_bushido-faye', '0.8.2'
+gem 'faye'
 
 # Monitoring
 gem 'newrelic_rpm'
@@ -26,22 +26,24 @@ gem 'remotipart'
 gem 'jquery-rails'
 gem 'enumerize'
 
-# Making the world a better, more stable place
-gem 'airbrake'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'bourbon', '~> 1.4.0'
-  gem 'execjs'   
+  gem 'bourbon'
+  gem 'execjs'
   gem 'eco'
   gem 'uglifier'
   gem 'bootstrap-sass', '~> 2.3.0.1'
 end
 
+group :production do
+  gem 'kandan-count'
+end
+
 group :development do
+  gem 'kandan-count-dev'
   gem 'pry-rails'
   gem 'quiet_assets'
   gem 'awesome_print'
@@ -56,9 +58,10 @@ group :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'simplecov', :require => false
+  gem 'coveralls', :require => false
 end
 
-group :development, :test do  
+group :development, :test do
   gem 'sqlite3'
   gem 'guard'
   gem 'guard-rspec'
