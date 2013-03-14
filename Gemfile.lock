@@ -317,8 +317,8 @@ DEPENDENCIES
   kaminari
   kandan-count
   kandan-count-dev
-  newrelic_rpm
   launchy
+  newrelic_rpm
   paperclip
   pg
   poltergeist
