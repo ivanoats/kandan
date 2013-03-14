@@ -13,7 +13,7 @@ module Broadcasters
       end
 
       def assets
-        ["/remote/faye.js"]
+        ["#{ENV['FULL_HOST']}/remote/faye.js"]
       end
     end
   end

@@ -34,4 +34,8 @@ Kandan::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Variable set to be able to get faye client for test environments
+  ENV['FULL_HOST'] = "http://localhost:9292"
+
 end
