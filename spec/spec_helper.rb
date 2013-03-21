@@ -1,5 +1,5 @@
 require 'simplecov'
-SimpleCov.start 'rails'
+SimpleCov.start 'rails' unless ENV['KANDAN_NO_COVERAGE']
 
 require 'coveralls'
 Coveralls.wear! 'rails'
@@ -34,7 +34,7 @@ faye_server.bind(:unsubscribe) do |client_id|
   ActiveUsers.remove_by_client_id(client_id)
 end
 
-Thread.new {faye_server.listen(9292)}
+Thread.new {faye_server.listen(ENV['KANDAN_FAYE_PORT'].to_i)}
 
 Capybara.app = Rack::URLMap.new({
   "/"        => Kandan::Application

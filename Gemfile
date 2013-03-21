@@ -1,13 +1,17 @@
 source 'https://rubygems.org'
 
 # Core gems
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Database adapters
 gem 'pg'
 
+# Uncomment next line when using MySQL database
+#gem 'mysql2'
+
 # Auth gems
 gem 'devise'
+gem 'cancan'
 
 # Server/transport gems
 gem 'thin'
